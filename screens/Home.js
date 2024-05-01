@@ -6,6 +6,7 @@ const Home = () => {
   const [remainingCapacity, setRemainingCapacity] = useState(null);
   const [remainingUses1, setRemainingUses1] = useState(null);
   const [remainingUses2, setRemainingUses2] = useState(null);
+  const [originalCapacity, setOriginalCapacity] = useState(null);
   const [modalOpenOrigCapacity, setModalOpenOrigCapacity] = useState(false);
   const [modalOpenRemUse, setModalOpenRemUse] = useState(false);
   const [modalOpenRemCap, setModalOpenRemCap] = useState(false);
@@ -63,6 +64,25 @@ const Home = () => {
     // Cleanup function to unsubscribe when component unmounts
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const docRef = firebase
+      .firestore()
+      .collection("Data")
+      .doc("TTPMqXh87rtqMBFN2f5V");
+
+    const unsubscribe = docRef.onSnapshot((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        setOriginalCapacity(data.originalCapacity);
+      } else {
+        console.log("No such document!");
+      }
+    });
+    // Cleanup function to unsubscribe when component unmounts
+    return () => unsubscribe();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.upperBox}>
@@ -138,7 +158,12 @@ const Home = () => {
                   style={styles.modalOpen}
                 />
               </Pressable>
-              <Text style={styles.SOHPercentage}> 2 Ah </Text>
+              <Text style={styles.SOHPercentage}>
+                {" "}
+                {originalCapacity !== null
+                  ? `${originalCapacity} Ah`
+                  : "Loading..."}{" "}
+              </Text>
             </View>
           </View>
         </View>
@@ -264,7 +289,7 @@ const styles = StyleSheet.create({
   },
   SOHPercentage: {
     paddingTop: 5,
-    paddingLeft: 100,
+    paddingLeft: 30,
     fontSize: 55,
     fontFamily: "asap",
     color: "#374353",
@@ -290,8 +315,8 @@ const styles = StyleSheet.create({
   },
   BattStatResult: {
     paddingTop: 5,
-    paddingLeft: 30,
-    fontSize: 50,
+    paddingLeft: 5,
+    fontSize: 45,
     fontFamily: "asap",
     color: "#374353",
   },
