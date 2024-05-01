@@ -120,7 +120,7 @@ const Home = () => {
                   Battery capacity (AH) is defined as a product of the current
                   that is drawn from the battery while the battery is able to
                   supply the load until its voltage is dropped to lower than a
-                  certain value for each cell.
+                  certain value for each cell.1
                 </Text>
               </View>
               <Pressable onPress={() => setModalOpenOrigCapacity(false)}>
