@@ -129,7 +129,7 @@ const Home = () => {
       <View style={styles.Boxes}>
         <View style={styles.SOHBox}>
           <View style={styles.TextContainerSOH}>
-            <Text style={styles.SOHText}> Original Capacity </Text>
+            <Text style={styles.SOHText}> Original Capacity1 </Text>
             <Modal visible={modalOpenOrigCapacity} animationType="fade">
               <View style={styles.modalContent}>
                 <Image
